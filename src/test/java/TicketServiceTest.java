@@ -36,6 +36,19 @@ public class TicketServiceTest {
     }
 
     @Test
+    public void testPurchase1Adult1InfantTicket() {
+
+        ticketService.purchaseTickets(ACCOUNT_ID,
+            new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 1),
+            new TicketTypeRequest(TicketTypeRequest.Type.INFANT, 1)
+        );
+
+        Mockito.verify(ticketPaymentService).makePayment(ACCOUNT_ID, 20);
+        Mockito.verify(seatReservationService).reserveSeat(ACCOUNT_ID, 1);
+
+    }
+
+    @Test
     public void testPurchase1Adult1ChildTicket() {
 
         ticketService.purchaseTickets(ACCOUNT_ID,
