@@ -23,6 +23,7 @@ public class TicketServiceTest {
     TicketServiceImpl ticketService;
 
     private static final long ACCOUNT_ID = 1L;
+    private static final long INVALID_ACCOUNT_ID = -1L;
 
     @Test
     public void testPurchase1AdultTicket() {
@@ -133,6 +134,15 @@ public class TicketServiceTest {
 
         ticketService.purchaseTickets(ACCOUNT_ID,
                 new TicketTypeRequest(TicketTypeRequest.Type.CHILD, 1)
+        );
+
+    }
+
+    @Test(expected = InvalidPurchaseException.class)
+    public void testInvalidAccountId() {
+
+        ticketService.purchaseTickets(INVALID_ACCOUNT_ID,
+                new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 1)
         );
 
     }
