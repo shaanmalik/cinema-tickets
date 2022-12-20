@@ -130,6 +130,15 @@ public class TicketServiceTest {
     }
 
     @Test(expected = InvalidPurchaseException.class)
+    public void testPurchaseNegativeAdultTicketInvalid() {
+
+        ticketService.purchaseTickets(ACCOUNT_ID,
+                new TicketTypeRequest(TicketTypeRequest.Type.ADULT, -1)
+        );
+
+    }
+
+    @Test(expected = InvalidPurchaseException.class)
     public void testPurchase1ChildTicketInvalid() {
 
         ticketService.purchaseTickets(ACCOUNT_ID,

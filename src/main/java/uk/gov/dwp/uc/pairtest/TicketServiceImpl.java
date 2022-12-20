@@ -51,6 +51,10 @@ public class TicketServiceImpl implements TicketService {
 
             totalTicketsPurchased += ticketTypeRequest.getNoOfTickets();
 
+            if (ticketTypeRequest.getNoOfTickets() <= 0) {
+                throw new InvalidPurchaseException();
+            }
+
             switch (ticketTypeRequest.getTicketType()) {
                 case ADULT:
                     totalAdultTickets += ticketTypeRequest.getNoOfTickets();
