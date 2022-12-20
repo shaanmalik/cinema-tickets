@@ -2,13 +2,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import thirdparty.paymentgateway.TicketPaymentService;
 import thirdparty.seatbooking.SeatReservationService;
 import uk.gov.dwp.uc.pairtest.TicketServiceImpl;
 import uk.gov.dwp.uc.pairtest.domain.TicketTypeRequest;
 import uk.gov.dwp.uc.pairtest.exception.InvalidPurchaseException;
+
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TicketServiceTest {
@@ -30,8 +31,8 @@ public class TicketServiceTest {
 
         ticketService.purchaseTickets(ACCOUNT_ID, new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 1));
 
-        Mockito.verify(ticketPaymentService).makePayment(ACCOUNT_ID, 20);
-        Mockito.verify(seatReservationService).reserveSeat(ACCOUNT_ID, 1);
+        verify(ticketPaymentService).makePayment(ACCOUNT_ID, 20);
+        verify(seatReservationService).reserveSeat(ACCOUNT_ID, 1);
 
     }
 
@@ -43,8 +44,8 @@ public class TicketServiceTest {
             new TicketTypeRequest(TicketTypeRequest.Type.INFANT, 1)
         );
 
-        Mockito.verify(ticketPaymentService).makePayment(ACCOUNT_ID, 20);
-        Mockito.verify(seatReservationService).reserveSeat(ACCOUNT_ID, 1);
+        verify(ticketPaymentService).makePayment(ACCOUNT_ID, 20);
+        verify(seatReservationService).reserveSeat(ACCOUNT_ID, 1);
 
     }
 
@@ -56,8 +57,8 @@ public class TicketServiceTest {
                 new TicketTypeRequest(TicketTypeRequest.Type.CHILD, 1)
                 );
 
-        Mockito.verify(ticketPaymentService).makePayment(ACCOUNT_ID, 30);
-        Mockito.verify(seatReservationService).reserveSeat(ACCOUNT_ID, 2);
+        verify(ticketPaymentService).makePayment(ACCOUNT_ID, 30);
+        verify(seatReservationService).reserveSeat(ACCOUNT_ID, 2);
 
     }
 
@@ -70,8 +71,8 @@ public class TicketServiceTest {
                 new TicketTypeRequest(TicketTypeRequest.Type.INFANT, 1)
         );
 
-        Mockito.verify(ticketPaymentService).makePayment(ACCOUNT_ID, 30);
-        Mockito.verify(seatReservationService).reserveSeat(ACCOUNT_ID, 2);
+        verify(ticketPaymentService).makePayment(ACCOUNT_ID, 30);
+        verify(seatReservationService).reserveSeat(ACCOUNT_ID, 2);
 
     }
 
@@ -84,8 +85,8 @@ public class TicketServiceTest {
                 new TicketTypeRequest(TicketTypeRequest.Type.INFANT, 1)
         );
 
-        Mockito.verify(ticketPaymentService).makePayment(ACCOUNT_ID, 60);
-        Mockito.verify(seatReservationService).reserveSeat(ACCOUNT_ID, 4);
+        verify(ticketPaymentService).makePayment(ACCOUNT_ID, 60);
+        verify(seatReservationService).reserveSeat(ACCOUNT_ID, 4);
 
     }
 
@@ -101,8 +102,8 @@ public class TicketServiceTest {
                 new TicketTypeRequest(TicketTypeRequest.Type.INFANT, 1)
         );
 
-        Mockito.verify(ticketPaymentService).makePayment(ACCOUNT_ID, 60);
-        Mockito.verify(seatReservationService).reserveSeat(ACCOUNT_ID, 4);
+        verify(ticketPaymentService).makePayment(ACCOUNT_ID, 60);
+        verify(seatReservationService).reserveSeat(ACCOUNT_ID, 4);
 
     }
 
@@ -117,8 +118,8 @@ public class TicketServiceTest {
                 new TicketTypeRequest(TicketTypeRequest.Type.INFANT, 2)
         );
 
-        Mockito.verify(ticketPaymentService).makePayment(ACCOUNT_ID, 110);
-        Mockito.verify(seatReservationService).reserveSeat(ACCOUNT_ID, 8);
+        verify(ticketPaymentService).makePayment(ACCOUNT_ID, 110);
+        verify(seatReservationService).reserveSeat(ACCOUNT_ID, 8);
 
     }
 
