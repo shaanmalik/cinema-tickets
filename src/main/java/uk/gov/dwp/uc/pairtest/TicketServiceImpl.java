@@ -31,7 +31,11 @@ public class TicketServiceImpl implements TicketService {
         return ticketTypeToPriceMap;
     }
 
-    private TotalSeatsAndAmountToPay validateRequest(long accountId, TicketTypeRequest... ticketTypeRequests) throws InvalidPurchaseException {
+    /**
+     * Should only have private methods other than the one below.
+     */
+    @Override
+    public void purchaseTickets(Long accountId, TicketTypeRequest... ticketTypeRequests) throws InvalidPurchaseException {
 
         if (!(accountId > 0)) {
             // only accountIds greater than 0 are valid
@@ -83,30 +87,8 @@ public class TicketServiceImpl implements TicketService {
             }
         }
 
-        return new TotalSeatsAndAmountToPay(totalSeats, totalAmountToPay);
+        seatReservationService.reserveSeat(accountId, totalSeats);
+        ticketPaymentService.makePayment(accountId, totalAmountToPay);
     }
-
-    /**
-     * Should only have private methods other than the one below.
-     */
-    @Override
-    public void purchaseTickets(Long accountId, TicketTypeRequest... ticketTypeRequests) throws InvalidPurchaseException {
-
-        TotalSeatsAndAmountToPay totalSeatsAndAmountToPay = validateRequest(accountId, ticketTypeRequests);
-
-        seatReservationService.reserveSeat(accountId, totalSeatsAndAmountToPay.totalSeats);
-        ticketPaymentService.makePayment(accountId, totalSeatsAndAmountToPay.totalAmountToPay);
-    }
-
-    private static class TotalSeatsAndAmountToPay {
-        private final int totalSeats;
-        private final int totalAmountToPay;
-
-        private TotalSeatsAndAmountToPay(int totalSeats, int totalAmountToPay) {
-            this.totalSeats = totalSeats;
-            this.totalAmountToPay = totalAmountToPay;
-        }
-    }
-
 
 }
