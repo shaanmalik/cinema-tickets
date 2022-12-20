@@ -38,9 +38,9 @@ public class TicketServiceImpl implements TicketService {
             throw new InvalidPurchaseException();
         }
 
-        int numTicketsPurchased = 0;
-        int totalSeats = 0;
+        int totalTicketsPurchased = 0;
 
+        int totalSeats = 0;
         int totalAmountToPay = 0;
 
         int totalAdultTickets = 0;
@@ -49,7 +49,7 @@ public class TicketServiceImpl implements TicketService {
 
         for (TicketTypeRequest ticketTypeRequest : ticketTypeRequests) {
 
-            numTicketsPurchased += ticketTypeRequest.getNoOfTickets();
+            totalTicketsPurchased += ticketTypeRequest.getNoOfTickets();
 
             switch (ticketTypeRequest.getTicketType()) {
                 case ADULT:
@@ -69,7 +69,7 @@ public class TicketServiceImpl implements TicketService {
             }
 
 
-            if (numTicketsPurchased > MAX_TICKETS) {
+            if (totalTicketsPurchased > MAX_TICKETS) {
                 throw new InvalidPurchaseException();
             }
 
