@@ -21,9 +21,14 @@ public class TicketServiceImpl implements TicketService {
     public TicketServiceImpl(TicketPaymentService ticketPaymentService, SeatReservationService seatReservationService) {
         this.ticketPaymentService = ticketPaymentService;
         this.seatReservationService = seatReservationService;
-        ticketTypeToPriceMap = new HashMap<>();
+        ticketTypeToPriceMap = getTicketTypeToPriceMap();
+    }
+
+    private Map<TicketTypeRequest.Type, Integer> getTicketTypeToPriceMap() {
+        Map<TicketTypeRequest.Type, Integer> ticketTypeToPriceMap = new HashMap<>();
         ticketTypeToPriceMap.put(TicketTypeRequest.Type.ADULT, 20);
         ticketTypeToPriceMap.put(TicketTypeRequest.Type.CHILD, 10);
+        return ticketTypeToPriceMap;
     }
 
     private TotalSeatsAndAmountToPay validateRequest(long accountId, TicketTypeRequest... ticketTypeRequests) throws InvalidPurchaseException {
