@@ -79,7 +79,7 @@ public class TicketServiceImpl implements TicketService {
                 throw new InvalidPurchaseException();
             }
 
-            if (!ticketTypeRequest.getTicketType().equals(TicketTypeRequest.Type.INFANT)) {
+            if (!TicketTypeRequest.Type.INFANT.equals(ticketTypeRequest.getTicketType())) {
                 totalSeats += ticketTypeRequest.getNoOfTickets();
                 totalAmountToPay += ticketTypeRequest.getNoOfTickets() * ticketTypeToPriceMap.get(ticketTypeRequest.getTicketType());
             }
