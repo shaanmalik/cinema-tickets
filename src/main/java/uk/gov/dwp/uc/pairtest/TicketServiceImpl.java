@@ -37,6 +37,10 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public void purchaseTickets(Long accountId, TicketTypeRequest... ticketTypeRequests) throws InvalidPurchaseException {
 
+        if (ticketTypeRequests.length == 0) {
+            return;
+        }
+
         if (!(accountId > 0)) {
             // only accountIds greater than 0 are valid
             throw new InvalidPurchaseException();

@@ -10,6 +10,7 @@ import uk.gov.dwp.uc.pairtest.domain.TicketTypeRequest;
 import uk.gov.dwp.uc.pairtest.exception.InvalidPurchaseException;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TicketServiceTest {
@@ -212,4 +213,15 @@ public class TicketServiceTest {
         verify(ticketPaymentService).makePayment(ACCOUNT_ID, 150);
         verify(seatReservationService).reserveSeat(ACCOUNT_ID, 10);
     }
+
+    @Test
+    public void testNoTicketsPurchasedNoPaymentMadeNoSeatsReserved() {
+
+        ticketService.purchaseTickets(ACCOUNT_ID);
+
+        verifyNoInteractions(ticketPaymentService);
+        verifyNoInteractions(seatReservationService);
+
+    }
+
 }
