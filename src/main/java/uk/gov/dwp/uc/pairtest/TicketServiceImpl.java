@@ -75,12 +75,6 @@ public class TicketServiceImpl implements TicketService {
                     break;
             }
 
-            if (totalChildTickets + totalInfantTickets > 0 && totalAdultTickets == 0) {
-                // cannot purchase child or infant tickets without at least 1 adult ticket
-                throw new InvalidPurchaseException();
-            }
-
-
             if (totalTicketsPurchased > MAX_TICKETS) {
                 throw new InvalidPurchaseException();
             }
@@ -89,6 +83,11 @@ public class TicketServiceImpl implements TicketService {
                 totalSeats += ticketTypeRequest.getNoOfTickets();
                 totalAmountToPay += ticketTypeRequest.getNoOfTickets() * ticketTypeToPriceMap.get(ticketTypeRequest.getTicketType());
             }
+        }
+
+        if (totalChildTickets + totalInfantTickets > 0 && totalAdultTickets == 0) {
+            // cannot purchase child or infant tickets without at least 1 adult ticket
+            throw new InvalidPurchaseException();
         }
 
         seatReservationService.reserveSeat(accountId, totalSeats);

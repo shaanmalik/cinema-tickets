@@ -51,6 +51,19 @@ public class TicketServiceTest {
     }
 
     @Test
+    public void testPurchase1Infant1AdultTicket() {
+
+        ticketService.purchaseTickets(ACCOUNT_ID,
+                new TicketTypeRequest(TicketTypeRequest.Type.INFANT, 1),
+                new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 1)
+        );
+
+        verify(ticketPaymentService).makePayment(ACCOUNT_ID, 20);
+        verify(seatReservationService).reserveSeat(ACCOUNT_ID, 1);
+
+    }
+
+    @Test
     public void testPurchase1Adult1ChildTicket() {
 
         ticketService.purchaseTickets(ACCOUNT_ID,
