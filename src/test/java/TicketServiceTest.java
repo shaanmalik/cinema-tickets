@@ -30,7 +30,9 @@ public class TicketServiceTest {
     @Test
     public void testPurchase1AdultTicket() {
 
-        ticketService.purchaseTickets(ACCOUNT_ID, new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 1));
+        ticketService.purchaseTickets(ACCOUNT_ID,
+                new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 1)
+        );
 
         verify(ticketPaymentService).makePayment(ACCOUNT_ID, 20);
         verify(seatReservationService).reserveSeat(ACCOUNT_ID, 1);
