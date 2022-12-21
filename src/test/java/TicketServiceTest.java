@@ -134,6 +134,15 @@ public class TicketServiceTest {
     }
 
     @Test(expected = InvalidPurchaseException.class)
+    public void testPurchase1ChildTicketInvalid() {
+
+        ticketService.purchaseTickets(ACCOUNT_ID,
+                new TicketTypeRequest(TicketTypeRequest.Type.CHILD, 1)
+        );
+
+    }
+
+    @Test(expected = InvalidPurchaseException.class)
     public void testPurchase1Infant1ChildTicketInvalid() {
 
         ticketService.purchaseTickets(ACCOUNT_ID,
@@ -153,20 +162,54 @@ public class TicketServiceTest {
     }
 
     @Test(expected = InvalidPurchaseException.class)
-    public void testPurchase1ChildTicketInvalid() {
-
-        ticketService.purchaseTickets(ACCOUNT_ID,
-                new TicketTypeRequest(TicketTypeRequest.Type.CHILD, 1)
-        );
-
-    }
-
-    @Test(expected = InvalidPurchaseException.class)
     public void testInvalidAccountId() {
 
         ticketService.purchaseTickets(INVALID_ACCOUNT_ID,
                 new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 1)
         );
 
+    }
+
+    @Test(expected = InvalidPurchaseException.class)
+    public void testTooManyTicketsInvalid() {
+
+        ticketService.purchaseTickets(ACCOUNT_ID,
+                new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 25)
+        );
+
+    }
+
+    @Test(expected = InvalidPurchaseException.class)
+    public void testTooManyAdultAndChildTicketsInvalid() {
+
+        ticketService.purchaseTickets(ACCOUNT_ID,
+                new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 15),
+                new TicketTypeRequest(TicketTypeRequest.Type.CHILD, 10)
+        );
+
+    }
+
+    @Test(expected = InvalidPurchaseException.class)
+    public void testTooManyAdultChildAndInfantTicketsInvalid() {
+
+        ticketService.purchaseTickets(ACCOUNT_ID,
+                new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 5),
+                new TicketTypeRequest(TicketTypeRequest.Type.CHILD, 5),
+                new TicketTypeRequest(TicketTypeRequest.Type.INFANT, 15)
+        );
+
+    }
+
+    @Test
+    public void testAdultChildAndInfantTicketsUnderLimitValid() {
+
+        ticketService.purchaseTickets(ACCOUNT_ID,
+                new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 5),
+                new TicketTypeRequest(TicketTypeRequest.Type.CHILD, 5),
+                new TicketTypeRequest(TicketTypeRequest.Type.INFANT, 10)
+        );
+
+        verify(ticketPaymentService).makePayment(ACCOUNT_ID, 150);
+        verify(seatReservationService).reserveSeat(ACCOUNT_ID, 10);
     }
 }
