@@ -239,7 +239,7 @@ public class TicketServiceTest {
     }
 
     @Test(expected = InvalidPurchaseException.class)
-    public void testUnderTicketLimitButWithNegativeTicketInvalid() {
+    public void testPurchaseUnderTicketLimitButWithNegativeTicketInvalid() {
 
         ticketService.purchaseTickets(ACCOUNT_ID,
                 new TicketTypeRequest(TicketTypeRequest.Type.ADULT, 6),
